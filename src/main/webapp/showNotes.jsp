@@ -13,6 +13,7 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%
+
 com.User.UserDetails user3 = (com.User.UserDetails) session.getAttribute("userD");
 
 if (user3 == null) {
@@ -38,6 +39,60 @@ if (user3 == null) {
 <body>
 	<div class="container-fluid ">
 		<%@include file="All_Componets/Navbar.jsp"%>
+		
+		<%String s1=(String)session.getAttribute("msg");
+		if(s1!=null){
+			
+			%>
+			
+			<div class="alert alert-danger" role="alert"><%=s1%></div>
+			
+			<% 
+			session.removeAttribute("msg");
+		}
+		
+			String s2=(String)session.getAttribute("wmsg");
+			
+		
+		if(s2!=null){
+			%>
+			<div class="alert alert-danger" role="alert"><%=s2%></div>
+			
+			<% 
+			session.removeAttribute("wmsg");
+		}
+		%>
+		
+		
+		<%-- 
+		
+		<%String s5=(String)session.getAttribute("msg7");
+		if(s1!=null){
+			
+			%>
+			
+			<div class="alert alert-success" role="alert"><%=s1%></div>
+			
+			<% 
+			session.removeAttribute("msg7");
+		}
+		
+			String s6=(String)session.getAttribute("msg8");
+			
+		
+		if(s2!=null){
+			%>
+			<div class="alert alert-danger" role="alert"><%=s2%></div>
+			
+			<% 
+			session.removeAttribute("msg8");
+		}
+		%>
+		
+		 --%>
+		
+		
+		
 
 		<div class="row">
 			<div class="col-md-12">
@@ -75,8 +130,8 @@ if (user3 == null) {
 								class="text-primary"></b>
 						</p>
 						<div class="container text-center mt-2">
-							<a href="" class="btn btn-danger">Delete</a> <a href=""
-								class="btn btn-primary">Edit</a>
+							<a href="DeleteServlet?note_id=<%= po.getId()%>" class="btn btn-danger">Delete</a> 
+							<a href="edit.jsp?note_id=<%= po.getId() %>" class="btn btn-primary">Edit</a>
 						</div>
 
 

@@ -1,3 +1,7 @@
+<%@page import="com.db.DBConnect"%>
+<%@page import="com.dao.UserDao"%>
+<%@page import="com.User.AddDetails"%>
+<% %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
@@ -26,34 +30,20 @@
 </head>
 <body>
 
+
+<% Integer noteid=Integer.parseInt(request.getParameter("note_id"));
+	UserDao us=new UserDao(DBConnect.getConn());
+	AddDetails ad=us.getDatabyID(noteid);
+
+
+
+
+
+%>
 <div class="container-fluid ">
 <%@include file="All_Componets/Navbar.jsp"%>
 
-
-<%String s1=(String)session.getAttribute("msg5");
-		if(s1!=null){
-			
-			%>
-			
-			<div class="alert alert-success" role="alert"><%=s1%></div>
-			
-			<% 
-			session.removeAttribute("msg5");
-		}
-		
-			String s2=(String)session.getAttribute("msg6");
-			
-		
-		if(s2!=null){
-			%>
-			<div class="alert alert-danger" role="alert"><%=s2%></div>
-			
-			<% 
-			session.removeAttribute("msg6");
-		}
-		%>
-
-<h1 class="text-center mt-2">Add Your Notes Here</h1>
+<h1 class="text-center mt-2">Edit Your Notes Here</h1>
 
 
 
@@ -62,7 +52,9 @@
 <div class="col-md-12">
 
 
-<form action="AddNotesServlet" method="post">
+<form action="EditNotesServlet" method="post">
+ 
+ <input type="hidden" name="note_id" value="<%=noteid%>">
  
  <div class="form-group">
  <%
@@ -79,7 +71,7 @@
  %>
    <div class="form-group">
     <label for="exampleInputEmail1">Enter Title</label><br>
-    <input type="text" name="title" class="form-control">
+    <input type="text" name="tittle" class="form-control" value="<%=ad.getTitle()%>">
     
   </div>
   </div>
@@ -89,7 +81,7 @@
     <label for="exampleInputEmail1">Enter Content</label>
     
   </div>
-    <textarea rows="9" cols="" class="form-control" id="cont"  name="content"></textarea>
+    <textarea rows="9" cols="" class="form-control" id="cont"  name="content" ><%=ad.getContent()%></textarea>
     
   </div>
  

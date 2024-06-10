@@ -1,5 +1,6 @@
 package com.dao;
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,15 +59,15 @@ public List<AddDetails> getUser(int id){
 		AddDetails ad=null;
 		try {
 			PreparedStatement ps=conn.prepareStatement(  
-					"select * from addnote where userID=? order by questionID DESC");
+					"select * from Addnote where userID=? order by questionID DESC");
 			ps.setInt(1, id);
 			ResultSet j=ps.executeQuery();
 			
 			while(j.next()) {
 				ad=new AddDetails();
 				ad.setId(j.getInt(1));
-				ad.setTitle(j.getString(3));
-				ad.setContent(j.getString(4));
+				ad.setTitle(j.getString(2));
+				ad.setContent(j.getString(3));
 				list.add(ad);
 				System.out.println(list);
 				
@@ -84,8 +85,104 @@ public List<AddDetails> getUser(int id){
 	
 		
 	}
+
+
+public boolean Deletenotes(int n) {
+	
+	boolean f=false;
+	try {
+		String qu="delete from Addnote where questionID=?";
+		PreparedStatement ps=conn.prepareStatement(qu);
+		ps.setInt(1,n);
+		
+		int x=ps.executeUpdate();
+		//System.out.println("update");
+		if(x==1) {
+			f=true;
+			//System.out.println("deleted");
+		}
+		
+		
+		
+		
+	}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
 	
 	
+	return f;
+	
+	
+}
+
+
+
+public AddDetails getDatabyID(int id){
+	AddDetails ad=null;
+	try {
+		
+		String  q2="select * from Addnote where questionID=?";
+		PreparedStatement ps=conn.prepareStatement(q2);
+		ps.setInt(1,id);
+		ResultSet rs=ps.executeQuery();
+		if(rs.next()) {
+			ad=new AddDetails();
+			ad.setId(rs.getInt(1));
+			ad.setTitle(rs.getString(2));
+			ad.setContent(rs.getString(3));
+		}
+	}
+	catch(Exception e){
+		e.printStackTrace();
+		
+	}
+	
+	return ad;
+	
+	
+	
+}
+	
+	
+
+public boolean updateuser(int id,String title,String content) {
+	boolean f=false;
+	try {
+		//System.out.println(id+title+content);
+		String s="update Addnote set Question=?,Solution=? where QuestionID=?";
+		
+		PreparedStatement ps=conn.prepareStatement(s);
+		/*
+		 * ps.setInt(1, id); ps.setString(2, title); ps.setString(3, content);
+		 */
+		
+		ps.setString(1, title);
+        ps.setString(2, content);
+        ps.setInt(3, id);
+		int i=ps.executeUpdate();
+		if(i==1) {
+			f=true;
+			System.out.println("update successfully");
+		}
+		
+		
+		
+	}
+	catch(Exception e) {
+		e.printStackTrace();
+		
+	}
+	
+	
+	
+	
+	return f;
+	
+	
+	
+	
+}
 	
 	
 	

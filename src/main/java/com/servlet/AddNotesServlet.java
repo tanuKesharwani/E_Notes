@@ -58,9 +58,12 @@ public class AddNotesServlet extends HttpServlet {
 		
 		AddDetails ad=new AddDetails();	
 			
-	    
+	    HttpSession session=null;
 			if(i>0)  {
-			   out.print("You are successfully added notes");  
+				
+				session=request.getSession(); session.setAttribute("msg5",
+						 "Add successfully your Notes"); response.sendRedirect("AddNotes.jsp");
+			  // out.print("You are successfully added notes");  
 			   
 				
 				
@@ -70,7 +73,9 @@ public class AddNotesServlet extends HttpServlet {
 		     
 			}
 			else {
-				request.setAttribute("status", "failed");
+				session=request.getSession(); session.setAttribute("msg6",
+						 "Server error"); response.sendRedirect("AddNotes.jsp");
+			   out.print("You are successfully added notes"); 
 			}
 		          
 			}catch (Exception e2) {System.out.println(e2);}
